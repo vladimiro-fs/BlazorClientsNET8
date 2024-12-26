@@ -1,5 +1,8 @@
-using BlazorClientsNET8.Client.Pages;
 using BlazorClientsNET8.Components;
+using BlazorClientsNET8.Context;
+using BlazorClientsNET8.Repositories;
+using BlazorClientsNET8.Shared.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+var connectionString = builder.Configuration
+                              .GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options => 
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
+builder.Services.AddScoped(http => new HttpClient
+{
+    BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
+});
 
 var app = builder.Build();
 
@@ -18,7 +36,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
