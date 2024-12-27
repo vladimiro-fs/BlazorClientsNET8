@@ -9,6 +9,6 @@
         {
         }
 
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<ClientEntity> Clients { get; set; }
     }
 }

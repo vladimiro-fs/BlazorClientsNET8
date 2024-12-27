@@ -4,14 +4,14 @@
 
     public interface IClientRepository
     {
-        Task<Client> AddClientAsync(Client client);
+        Task<ClientEntity> AddClientAsync(ClientEntity client);
 
-        Task<Client> UpdateClientAsync(Client client);
+        Task<ClientEntity> UpdateClientAsync(ClientEntity client);
 
-        Task<Client> DeleteClientAsync(int clientId);
+        Task<ClientEntity> DeleteClientAsync(int clientId);
 
-        Task<List<Client>> GetAllClientsAsync();
+        Task<List<ClientEntity>> GetAllClientsAsync();
 
-        Task<Client> GetClientByIdAsync(int clientId);
+        Task<ClientEntity> GetClientByIdAsync(int clientId);
     }
 }

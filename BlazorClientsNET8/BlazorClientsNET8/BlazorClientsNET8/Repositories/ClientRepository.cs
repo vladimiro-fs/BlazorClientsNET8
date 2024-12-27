@@ -14,10 +14,10 @@
             _context = context;
         }
 
-        public async Task<Client> AddClientAsync(Client client)
+        public async Task<ClientEntity> AddClientAsync(ClientEntity client)
         {
             if (client == null)
-                return null;
+                return null!;
 
             var check = await _context.Clients
                 .Where(c => c.Name.ToLower()
@@ -33,7 +33,7 @@
             return newClient;
         }
 
-        public async Task<Client> DeleteClientAsync(int clientId)
+        public async Task<ClientEntity> DeleteClientAsync(int clientId)
         {
             var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == clientId);
 
@@ -46,12 +46,12 @@
             return client;
         }
 
-        public async Task<List<Client>> GetAllClientsAsync()
+        public async Task<List<ClientEntity>> GetAllClientsAsync()
         {
             return await _context.Clients.ToListAsync();
         }
 
-        public async Task<Client> GetClientByIdAsync(int clientId)
+        public async Task<ClientEntity> GetClientByIdAsync(int clientId)
         {
             var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == clientId);
 
@@ -61,7 +61,7 @@
             return client;
         }
 
-        public async Task<Client> UpdateClientAsync(Client client)
+        public async Task<ClientEntity> UpdateClientAsync(ClientEntity client)
         {
             var clientToEdit = await _context.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
 

@@ -16,35 +16,35 @@
         }
 
         [HttpGet("Clients")]
-        public async Task<ActionResult<List<Client>>> GetAllClients() 
+        public async Task<ActionResult<List<ClientEntity>>> GetAllClients() 
         {
             var clients = await _clientRepository.GetAllClientsAsync();
             return Ok(clients);
         }
 
         [HttpGet("Client/{id}")]
-        public async Task<ActionResult<Client>> GetClient(int id) 
+        public async Task<ActionResult<ClientEntity>> GetClient(int id) 
         {
             var client = await _clientRepository.GetClientByIdAsync(id);
             return Ok(client);
         }
 
         [HttpPost("AddClient")]
-        public async Task<ActionResult<Client>> AddClient(Client client) 
+        public async Task<ActionResult<ClientEntity>> AddClient(ClientEntity client) 
         {
             var newClient = await _clientRepository.AddClientAsync(client);
             return Ok(newClient);
         }
 
         [HttpPut("UpdateClient")]
-        public async Task<ActionResult<Client>> UpdateClient(Client client) 
+        public async Task<ActionResult<ClientEntity>> UpdateClient(ClientEntity client) 
         {
             var clientToUpdate = await _clientRepository.UpdateClientAsync(client);
             return Ok(clientToUpdate);
         }
 
         [HttpDelete("DeleteClient/{id}")]
-        public async Task<ActionResult<Client>> DeleteClient(int id) 
+        public async Task<ActionResult<ClientEntity>> DeleteClient(int id) 
         {
             var client = await _clientRepository.DeleteClientAsync(id);
             return Ok(client);
