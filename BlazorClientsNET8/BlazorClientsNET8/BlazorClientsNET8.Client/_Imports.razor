@@ -3,7 +3,16 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
-@using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using BlazorClientsNET8.Client
+@using BlazorClientsNET8.Client.Services
+@using BlazorClientsNET8.Shared.Entities
+@using BlazorClientsNET8.Shared.Interfaces
+@using BlazorClientsNET8.Client.Pages
+
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+
+@inject IClientRepository _clientService
+@inject NavigationManager _navigation
+@inject IJSRuntime _js

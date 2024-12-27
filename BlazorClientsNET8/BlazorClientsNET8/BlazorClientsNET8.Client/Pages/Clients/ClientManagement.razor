@@ -1,0 +1,72 @@
+﻿@page "/clientmanagement"
+@page "/clientmanagement/{Id:int}"
+@rendermode InteractiveAuto
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">Management</div>
+                <div class="card-body">
+                    <EditForm Model="ClientModel" OnValidSubmit="HandleSave" FormName="Client">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <InputText @bind-Value="ClientModel.Name" class="form-control"></InputText>
+                            <ValidationMessage For="() => ClientModel.Name"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <InputText @bind-Value="ClientModel.Email" class="form-control"></InputText>
+                            <ValidationMessage For="() => ClientModel.Email"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Age</label>
+                            <InputNumber @bind-Value="ClientModel.Age" class="form-control"></InputNumber>
+                            <ValidationMessage For="() => ClientModel.Age"></ValidationMessage>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-2">Save</button>
+                    </EditForm>
+                </div>
+
+                <div class="card-footer">
+                    Name: @ReturnClient.Name <br />
+                    Email: @ReturnClient.Email <br />
+                    Age: @ReturnClient.Age
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public ClientEntity ClientModel { get; set; } = new();
+
+    [Parameter] 
+    public int Id { get; set; }
+
+    private ClientEntity ReturnClient = new();
+
+    private async Task HandleSave()
+    {
+        if (ClientModel.Id > 0)
+        {
+            ReturnClient = await _clientService.UpdateClientAsync(ClientModel);
+            ClientModel = new();
+        }
+        else
+        {
+            ReturnClient = await _clientService.AddClientAsync(ClientModel);
+            ClientModel = new();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id > 0)
+            ClientModel = await _clientService.GetClientByIdAsync(Id);
+    }
+}
